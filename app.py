@@ -1,21 +1,76 @@
 import datetime
-# import numpy as np
-# import arrow
+import numpy as np
+import arrow
 
 stub_handle_message_time = list()
+# Szenario 1, Data 1
 stub_handle_message_time.append({'time': '2020-02-10T11:33:00.299356+01:00', 'device': 'pump', 'location': 'Hamburg', 'energy_consumption': 1269})
+
+# Szenario 1, Data 2
 stub_handle_message_time.append({'time': '2020-02-10T11:33:00.299356+01:00', 'device': 'rain_gauge', 'location': 'Dresden', 'value': 47})
+
+# Szenario 2, Data 1
+stub_handle_message_time.append({'time': '2020-02-11T11:33:00.299356+01:00', 'device': 'pump', 'location': 'Berlin', 'energy_consumption': 1200})
+stub_handle_message_time.append({'time': '2020-02-12T11:33:00.299356+01:00', 'device': 'pump', 'location': 'Berlin', 'energy_consumption': 1200})
+stub_handle_message_time.append({'time': '2020-02-13T11:33:00.299356+01:00', 'device': 'pump', 'location': 'Berlin', 'energy_consumption': 3000})
+stub_handle_message_time.append({'time': '2020-02-14T11:33:00.299356+01:00', 'device': 'pump', 'location': 'Berlin', 'energy_consumption': 3000})
+stub_handle_message_time.append({'time': '2020-02-11T11:33:00.299356+01:00', 'device': 'rain_gauge', 'location': 'Berlin', 'value': 30})
+stub_handle_message_time.append({'time': '2020-02-12T11:33:00.299356+01:00', 'device': 'rain_gauge', 'location': 'Berlin', 'value': 30})
+stub_handle_message_time.append({'time': '2020-02-13T11:33:00.299356+01:00', 'device': 'rain_gauge', 'location': 'Berlin', 'value': 100})
+stub_handle_message_time.append({'time': '2020-02-14T11:33:00.299356+01:00', 'device': 'rain_gauge', 'location': 'Berlin', 'value': 100})
+
+# Szenario 2, Data 2
+stub_handle_message_time.append({'time': '2020-02-11T11:33:00.299356+01:00', 'device': 'pump', 'location': 'Hamburg', 'energy_consumption': 1200})
+stub_handle_message_time.append({'time': '2020-02-12T11:33:00.299356+01:00', 'device': 'pump', 'location': 'Hamburg', 'energy_consumption': 1200})
+stub_handle_message_time.append({'time': '2020-02-13T11:33:00.299356+01:00', 'device': 'pump', 'location': 'Hamburg', 'energy_consumption': 3000})
+stub_handle_message_time.append({'time': '2020-02-14T11:33:00.299356+01:00', 'device': 'pump', 'location': 'Hamburg', 'energy_consumption': 3000})
+stub_handle_message_time.append({'time': '2020-02-11T11:33:00.299356+01:00', 'device': 'rain_gauge', 'location': 'Hamburg', 'value': 0})
+stub_handle_message_time.append({'time': '2020-02-12T11:33:00.299356+01:00', 'device': 'rain_gauge', 'location': 'Hamburg', 'value': 0})
+stub_handle_message_time.append({'time': '2020-02-13T11:33:00.299356+01:00', 'device': 'rain_gauge', 'location': 'Hamburg', 'value': 0})
+stub_handle_message_time.append({'time': '2020-02-14T11:33:00.299356+01:00', 'device': 'rain_gauge', 'location': 'Hamburg', 'value': 0})
+
+# Szenario 3, Data 1
+stub_handle_message_time.append({'time': '2020-02-01T11:33:00.299356+01:00', 'device': 'pump', 'location': 'Zuerich', 'energy_consumption': 1000})
+stub_handle_message_time.append({'time': '2020-02-02T11:33:00.299356+01:00', 'device': 'pump', 'location': 'Zuerich', 'energy_consumption': 1000})
+stub_handle_message_time.append({'time': '2020-02-03T11:33:00.299356+01:00', 'device': 'pump', 'location': 'Zuerich', 'energy_consumption': 1200})
+stub_handle_message_time.append({'time': '2020-02-04T11:33:00.299356+01:00', 'device': 'pump', 'location': 'Zuerich', 'energy_consumption': 1200})
+stub_handle_message_time.append({'time': '2020-02-01T11:33:00.299356+01:00', 'device': 'rain_gauge', 'location': 'Zuerich', 'value': 0})
+stub_handle_message_time.append({'time': '2020-02-02T11:33:00.299356+01:00', 'device': 'rain_gauge', 'location': 'Zuerich', 'value': 0})
+stub_handle_message_time.append({'time': '2020-02-03T11:33:00.299356+01:00', 'device': 'rain_gauge', 'location': 'Zuerich', 'value': 0})
+stub_handle_message_time.append({'time': '2020-02-04T11:33:00.299356+01:00', 'device': 'rain_gauge', 'location': 'Zuerich', 'value': 0})
+
 
 def main():
     a = WaterPumpAnalyzer()
 
+    for x in stub_handle_message_time:
+        a.handle_message(x)
+
     # Szenario 1, Data 1
-    a.handle_message(stub_handle_message_time[0])
     print(a.get_raw_data(timestamp="2020-02-10T11:33:00.299356+01:00", device="pump", location="Hamburg"))
+    # Expect 1269
 
     # Szenario 1, Data 2
-    a.handle_message(stub_handle_message_time[1])
     print(a.get_raw_data(timestamp='2020-02-10T11:33:00.299356+01:00', device="rain_gauge", location="Dresden"))
+    # Expect 47
+
+    # # Szenario 2, Data 1
+    # start = datetime.date(2020, 2, 13)
+    # end = datetime.date(2020, 2, 14)
+    # print(str(a.is_error_mode(start=start, end=end, location="Berlin")))
+    # # Expect False
+
+    # # Szenario 2, Data 2
+    # start = datetime.date(2020, 2, 13)
+    # end = datetime.date(2020, 2, 14)
+    # print(str(a.is_error_mode(start=start, end=end, location="Hamburg")))
+    # # Expect True
+
+    # Szenario 3, Data 1
+    start = datetime.date(2020, 2, 3)
+    end = datetime.date(2020, 2, 4)
+    print(str(a.is_error_mode(start=start, end=end, location="Zuerich")))
+    # Expect True
 
     pass
 
@@ -36,10 +91,10 @@ class WaterPumpAnalyzer:
         self.location(location).add_measurement(data)
 
     def get_raw_data(self, timestamp: str, device: str, location: str) -> dict:
-        return self.location(location).get_measurement(device, timestamp)
+        return self.location(location).measurement(device, timestamp)
 
     def is_error_mode(self, start: datetime.date, end: datetime.date, location: str) -> bool:
-        pass
+        return self.location(location).is_error_mode(start, end)
 
     def location(self, location):
         return self._get_fitting_locations(location)[0]
@@ -77,21 +132,31 @@ class WaterPumpAnalyzerLocation:
         time = self._make_datetime(data.get('time'))
 
         if (device == 'pump'):
-            value = data.get('energy_consumption')
+            value = (data.get('energy_consumption'))
             self.pump.add_measurement(time, value)
         elif (device == 'rain_gauge'):
-            value = data.get('value')
+            value = (data.get('value'))
             self.rain_gauge.add_measurement(time, value)
         else:
             raise ValueError('Unknown device_type "' + device + '"')
 
-    def get_measurement(self, device, time):
+    def is_error_mode(self, start, end):
+        pump_delta_average = self.pump.periode_delta_average_percent(start, end)
+        rain_gauge_delta_average = self.rain_gauge.periode_delta_average_percent(start, end)
+
+        if (pump_delta_average >= self.pump.average_threshold and
+            rain_gauge_delta_average < self.rain_gauge.average_threshold):
+            return True
+        else:
+            return False
+
+    def measurement(self, device, time):
         time = self._make_datetime(time)
 
         if (device == 'pump'):
-            measurement = self.pump.get_measurement(time)
+            measurement = self.pump.measurement(time)
         elif (device == 'rain_gauge'):
-            measurement = self.rain_gauge.get_measurement(time)
+            measurement = self.rain_gauge.measurement(time)
         else:
             raise ValueError('Unknown device_type "' + device + '"')
 
@@ -104,6 +169,15 @@ class WaterPumpAnalyzerDevice:
 
     def __init__(self, device_type):
         self.__measurements__ = list()
+        self.__average_threshold__ = 20
+
+    @property
+    def average_threshold(self):
+        return self.__average_threshold__
+
+    @average_threshold.setter
+    def average_threshold(self, threshold):
+        self.__average_threshold__ = threshold
 
     @property
     def measurements(self):
@@ -112,8 +186,39 @@ class WaterPumpAnalyzerDevice:
     def add_measurement(self, time, value):
         self.measurements.append(WaterPumpAnalyzerMeasurement(time, value))
 
-    def get_measurement(self, time):
+    def average(self, start, end):
+        measurements = self.measurements_in_periode(start, end)
+        measurements_count = len(measurements)
+
+        if measurements_count == 0:
+            return 0
+        else:
+            return sum(measurements) / measurements_count
+
+    def measurement(self, time):
         return [x.value for x in self.measurements if x.time == time][0]
+
+    def measurements_in_periode(self, start, end):
+        return [x.value for x in self.measurements if (x.time.date() >= start and x.time.date() < end)]
+
+    def periode_delta_average_percent(self, start, end):
+        periode = end - start 
+
+        last_start = start - periode
+        last_end = end - periode
+
+        average = self.average(start, end)
+        last_average = self.average(last_start, last_end)
+
+        if last_average == 0 and average == 0:
+            delta_average = 0 
+        elif last_average != 0:
+            delta_average = average / last_average * 100 - 100
+        else:
+            delta_average = 100
+
+        return delta_average
+
 
 class WaterPumpAnalyzerMeasurement:
 
